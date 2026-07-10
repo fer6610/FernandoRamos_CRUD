@@ -27,7 +27,7 @@ public class DepartamentosService {
             return convertirADTO(entitySave);
         }catch (Exception e){
             log.error("Error al ingresar la información del departamento" + e.getMessage());
-            throw new RuntimeException("Error al registrar el departamento");
+           return null;
         }
     }
 
@@ -45,5 +45,10 @@ public class DepartamentosService {
         objDTO.setAbreviatura(entity.getAbreviatura());
         objDTO.setUbicacion(entity.getUbicacion());
         return objDTO;
+    }
+
+    public List<DepartamentoDTO> obtenerTodo() {
+        List<DepartamentoEntity> data = repo.findAll();
+        return data.stream().mpa(this::convertirADTO).collect(Collectors.toList());
     }
 }
